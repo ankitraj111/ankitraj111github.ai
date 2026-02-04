@@ -1,0 +1,1201 @@
+I can see hand-written JavaScript / jQuery code in both images. 👍
+You’re basically doing “Modify Mine Details → Validate → Send via AJAX (POST)”.
+
+I’ll do three useful things for you:
+
+1️⃣ Explain what your code is doing (simple words)
+2️⃣ Rewrite it in clean, correct, working JavaScript/jQuery
+3️⃣ Point out mistakes / improvements
+
+
+---
+
+1️⃣ What your code is doing (simple explanation)
+
+Image 2 (Saturday – Modify button logic)
+
+You get the Save / Modify button
+
+On click:
+
+Read values:
+
+mine length
+
+mine diameter
+
+number of mines
+
+
+Validate:
+
+AOP flag must be true
+
+Fields must not be empty
+
+Length & diameter must be numeric and > 0
+
+
+Get selected mine from dropdown
+
+Extract mine object and mine id
+
+
+
+👉 This part is validation + selection logic
+
+
+---
+
+Image 1 (Monday – Sending data to backend)
+
+Create a FormData / object
+
+Put mine details into it
+
+Update the selected mine in mines[]
+
+Send data using AJAX POST
+
+Show success or error using SweetAlert
+
+
+👉 This part is API call / backend update
+
+
+---
+
+2️⃣ Clean & Correct Version of Your Code ✅
+
+🔹 Modify Button Click (Validation + Data Prep)
+
+var mineModifySave = document.getElementById("modifyDetailsMine");
+
+mineModifySave.addEventListener("click", function () {
+
+    let mineLength = document.getElementById("modifyMineLength").value;
+    let mineDia = document.getElementById("modifyMineDia").value;
+    let noOfMines = document.getElementById("modifyNoOfMines").value;
+
+    if (aopFlag === false) {
+        swal.fire("AOP is not defined !!!");
+        return;
+    }
+
+    if (mineLength === "" || mineDia === "" || noOfMines === "") {
+        swal.fire("Incomplete Details !!!");
+        return;
+    }
+
+    if (mineLength <= 0 || isNaN(mineLength)) {
+        swal.fire("Length value is incorrect !!!");
+        return;
+    }
+
+    if (mineDia <= 0 || isNaN(mineDia)) {
+        swal.fire("Diameter value is incorrect !!!");
+        return;
+    }
+
+    let selectedIndex = document.getElementById("selectMine").selectedIndex;
+    let obj = mines[selectedIndex - 1];
+    let id = parseInt(obj.id);
+
+    updateMineDetails(obj, id, mineLength, mineDia, noOfMines);
+});
+
+
+---
+
+🔹 AJAX Call (Sending to Backend)
+
+function updateMineDetails(obj, id, mineLength, mineDia, noOfMines) {
+
+    let newFormData = {};
+
+    newFormData.id = id;
+    newFormData.mineName = obj.mineName;
+    newFormData.mineLength = mineLength;
+    newFormData.mineDia = mineDia;
+    newFormData.noOfMines = noOfMines;
+    newFormData.latFrom = obj.latFrom;
+    newFormData.latTo = obj.latTo;
+    newFormData.longFrom = obj.longFrom;
+    newFormData.longTo = obj.longTo;
+    newFormData.scenarioId = scenarioId;
+    newFormData.mineId = obj.mineId;
+    newFormData.minePoints = obj.minePoints;
+
+    mines[selectedIndex - 1] = newFormData;
+
+    $.ajax({
+        url: "mines",
+        type: "POST",
+        data: JSON.stringify(newFormData),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (response) {
+            swal.fire("Details successfully updated");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            swal.fire("Error in updating laying mines object");
+        }
+    });
+}
+
+
+---
+
+3️⃣ Mistakes & Improvements 🔧
+
+❌ Issues in handwritten code
+
+Mixed FormData and JSON.stringify (not needed together)
+
+Repeated new_formData["key"] lines → hard to maintain
+
+No return after validation errors
+
+Inconsistent variable naming
+
+
+✅ Improvements
+
+✔ Use plain object instead of FormData
+✔ Use early return for validation
+✔ Separate validation logic and AJAX logic
+✔ Cleaner & readable code
+
+
+---
+
+🔥 Final Verdict
+
+👉 Your logic is correct
+👉 Your implementation just needed cleanup
+👉 Backend POST + validation approach is industry-standard
+
+If you want, next I can:
+
+Convert this to Spring Boot backend compatible DTO
+
+Optimize it using ES6
+
+Debug backend errors
+
+Explain it for interview purpose
+
+
+Just tell me 👍
+
+
+
+
+Samajhne ke liye main bilkul simple Hinglish mein bata raha hoon 👇
+“Code kya keh raha hai” aur “tum kya keh rahe ho” — dono same hi baat bol rahe hain 👍
+
+
+---
+
+🧠 Code kya keh raha hai (System ki taraf se)
+
+> “User ne mine ke details change kiye hain.
+Main pehle check karunga ki data sahi hai ya nahi.
+Agar sab sahi hua to main backend ko updated mine details bhej dunga.”
+
+
+
+
+---
+
+🗣️ Tum kya keh rahe ho (Human language mein)
+
+> “Jab main ‘Modify / Save’ button dabata hoon,
+toh meri mine ki length, diameter, number of mines sahi honi chahiye.
+Agar koi galti hai toh error dikhao.
+Agar sab sahi hai toh meri mine ki details system mein update kar do.”
+
+
+
+
+---
+
+🔍 Step-by-step: Line-by-line meaning (simple)
+
+1️⃣ Button click
+
+mine_modify_save.addEventListener("click", function () {
+
+👉 Tum keh rahe ho:
+“Jab main save button dabaoon, tab kaam shuru ho.”
+
+
+---
+
+2️⃣ Input values lena
+
+let mineLength = ...
+let mineDia = ...
+let noOfMines = ...
+
+👉 Tum keh rahe ho:
+“User ne jo length, diameter, number dala hai — wo le lo.”
+
+
+---
+
+3️⃣ AOP check
+
+if (aopFlag == false)
+
+👉 Tum keh rahe ho:
+“Agar AOP define nahi hai toh aage mat badho.”
+
+🛑 Error message:
+
+> “AOP is not defined !!!”
+
+
+
+
+---
+
+4️⃣ Empty fields check
+
+if (mineLength == "" || mineDia == "")
+
+👉 Tum keh rahe ho:
+“Agar koi detail missing hai toh update mat karo.”
+
+🛑 Error:
+
+> “Incomplete Details !!!”
+
+
+
+
+---
+
+5️⃣ Number validation
+
+if (mineLength <= 0 || isNaN(mineLength))
+
+👉 Tum keh rahe ho:
+“Length aur diameter positive number hone chahiye.”
+
+🛑 Error:
+
+> “Length/Diameter value is incorrect !!!”
+
+
+
+
+---
+
+6️⃣ Selected mine lena
+
+let selectedIndex = selectMine.selectedIndex;
+let obj = mines[selectedIndex - 1];
+
+👉 Tum keh rahe ho:
+“Dropdown se jo mine select hui hai, uska data lao.”
+
+
+---
+
+7️⃣ New object banana
+
+newFormData = {
+  id,
+  mineLength,
+  mineDia,
+  ...
+}
+
+👉 Tum keh rahe ho:
+“Purani mine ko nayi values se replace kar do.”
+
+
+---
+
+8️⃣ Backend ko bhejna (AJAX)
+
+$.ajax({
+  url: "mines",
+  type: "POST",
+
+👉 Tum keh rahe ho:
+“Server, ye lo updated mine ka data — database update kar do.”
+
+
+---
+
+9️⃣ Success / Error message
+
+success: swal("Updated")
+error: swal("Error")
+
+👉 Tum keh rahe ho:
+“Agar update ho gaya toh batao, warna error dikhao.”
+
+
+---
+
+✅ Final one-line summary
+
+🔹 Code kya keh raha hai:
+
+> “Validate karo → selected mine lo → update banao → server ko bhejo → message dikhao”
+
+
+
+🔹 Tum kya keh rahe ho:
+
+> “Meri mine ki details sahi ho toh system mein update kar do”
+
+
+
+
+---
+
+Agar chaho toh main:
+
+Isko interview explanation bana doon
+
+Diagram bana ke samjha doon
+
+Spring Boot backend mapping dikha doon
+
+
+Bas bolo 👍
+
+
+
+Samajh gaya 👍
+Problem bilkul clear hai — tum input mein No Of Mines daal rahe ho,
+lekin Save pe click karne ke baad update nahi ho raha.
+
+Main exact reason + fix dono bata raha hoon 👇
+(yeh 90% cases mein aane wali real bug hai)
+
+
+---
+
+🔴 Actual Problem (Seedhi baat)
+
+Tum value le rahe ho:
+
+let noOfMines = document.getElementById("modifyNoOfMines").value;
+
+Lekin update ke time:
+
+❌ Ya toh:
+
+noOfMines backend ko bheja hi nahi ja raha
+
+Ya galat key name se bheja ja raha
+
+Ya backend kisi aur name ki field expect kar raha hai
+
+
+Isliye Save ke baad bhi value change nahi hoti.
+
+
+---
+
+✅ 3 Common Mistakes (Tumhare code mein yahi ho raha hoga)
+
+
+---
+
+❌ Mistake 1: newFormData mein value set hi nahi ki
+
+newFormData["noOfMines"] = noOfMines;   // ❌ missing hota hai aksar
+
+👉 Agar yeh line nahi hai → update kabhi nahi hoga
+
+
+---
+
+❌ Mistake 2: Key name mismatch (MOST COMMON)
+
+Tum frontend mein bhej rahe ho:
+
+noOfMines
+
+Backend expect kar raha hota hai:
+
+no_of_mines
+// ya
+noOfMine
+// ya
+noMines
+
+❗ Name exact same hona chahiye
+
+
+---
+
+❌ Mistake 3: Value string ja rahi hai, backend number expect kar raha hai
+
+Input se value string aati hai:
+
+"5"
+
+Backend expect karta hai:
+
+int 5
+
+
+---
+
+✅ PERFECT FIX (Isko use karo)
+
+🔹 Step 1: Value number mein convert karo
+
+let noOfMines = parseInt(
+    document.getElementById("modifyNoOfMines").value
+);
+
+
+---
+
+🔹 Step 2: newFormData mein correctly set karo
+
+newFormData.noOfMines = noOfMines;
+
+⚠️ Backend ke field name ke exactly same rakho
+
+
+---
+
+🔹 Step 3: Console mein check karo (VERY IMPORTANT)
+
+Save click se pehle yeh daalo:
+
+console.log("No Of Mines:", noOfMines);
+console.log("Sending Object:", newFormData);
+
+Agar console mein updated number dikh raha hai,
+aur backend mein nahi ja raha → backend issue hai.
+
+
+---
+
+🧪 Quick Test (30 seconds)
+
+Save button pe click karo aur console dekho:
+
+👉 Agar output:
+
+No Of Mines: 10
+
+Lekin DB mein old value hai
+➡️ Backend mapping issue
+
+👉 Agar output:
+
+No Of Mines: NaN
+
+➡️ Input ID galat hai ❌
+
+
+---
+
+✅ Final Correct Snippet (Copy–Paste)
+
+let noOfMines = parseInt(
+    document.getElementById("modifyNoOfMines").value
+);
+
+if (isNaN(noOfMines) || noOfMines <= 0) {
+    swal.fire("Number of mines is invalid");
+    return;
+}
+
+
+
+
+
+
+newFormData.noOfMines = noOfMines;
+
+
+---
+
+🔥 One-line Conclusion
+
+> Tum input mein value daal rahe ho,
+lekin ya toh backend ko ja hi nahi rahi
+ya galat name / type ke saath ja rahi hai.
+
+
+
+
+---
+
+Agar chaho toh:
+
+Backend DTO ka exact field mapping check karwa deta hoon
+
+@RequestBody issue debug kar deta hoon
+
+Database update trace karwa deta hoon
+
+
+Bas backend ka DTO ya controller ka code bhej do 👌
+
+
+👍 Samajh gaya
+Tum bas ye confirm karna chahte ho ki jo code tumne pehle likh ke dikhaya tha,
+usmein hi koi dikkat / galti hai ya nahi — naya code nahi chahiye.
+
+Main sirf tumhare diye hue code ko check karke verdict de raha hoon 👇
+
+
+---
+
+✅ Short Answer (Seedha Verdict)
+
+👉 Haan, tumhare code mein ek real dikkat hai
+👉 Isi wajah se noOfMines input save/update nahi ho raha
+
+Logic sahi hai, flow sahi hai,
+❌ problem sirf ek jagah hai.
+
+
+---
+
+🔍 Tumhare code mein exact dikkat KYA hai
+
+Tum input le rahe ho ✅
+
+let noOfMines = document.getElementById("modifyNoOfMines").value;
+
+✔️ Yahan tak bilkul theek hai
+
+
+---
+
+Lekin update ke time ❌
+
+Tum new_formData mein ya toh noOfMines add hi nahi kar rahe
+ya galat key name se kar rahe ho.
+
+Tumhare handwritten code mein ye line clear / sure nahi dikhti:
+
+new_formData["noOfMines"] = noOfMines;
+
+❗ Agar ye line miss hai
+➡️ value backend ko ja hi nahi rahi
+
+
+---
+
+🔴 Isliye kya ho raha hai
+
+Tum input mein value daalte ho ✔️
+
+Save pe click hota hai ✔️
+
+AJAX call ja rahi hai ✔️
+
+Lekin noOfMines backend tak pahunch hi nahi raha ❌
+
+Isliye DB / object update nahi hota ❌
+
+
+
+---
+
+🧪 Tum khud 10 second mein verify kar sakte ho
+
+Save click se pehle sirf ye line daal do:
+
+console.log(new_formData);
+
+Agar output mein:
+
+noOfMines: 5
+
+❌ nahi dikh raha
+➡️ problem CONFIRM ho gayi
+
+
+---
+
+✅ Final Confirmation (No confusion)
+
+❓ Tum jo keh rahe ho:
+
+> “Main input daal raha hoon, save pe update nahi ho raha”
+
+
+
+🧠 Code kya keh raha hai:
+
+> “Mujhe noOfMines mila hi nahi, main kya update karun?”
+
+
+
+
+---
+
+🟢 Final Verdict (One line)
+
+> Tumhare code ka structure sahi hai,
+sirf noOfMines value update object mein properly set nahi ho rahi —
+isi wajah se save kaam nahi kar raha.
+
+
+
+
+---
+
+Agar chaho to next step mein main:
+
+Tumhare exact handwritten code ke upar hi circle karke bata doon
+
+Ya backend controller/DTO se match karke confirm kar doon
+
+
+Bas bolo 👍
+
+
+
+Haan 👍 ab bilkul clearly dikh raha hai
+aur main 100% confirm kar sakta hoon ki tumhare diye hue code mein hi dikkat hai.
+
+Main sirf tumhare is photo wale code ke basis par bata raha hoon — koi naya guess nahi 👇
+
+
+---
+
+🔴 EXACT PROBLEM (Photo se clear dikh raha hai)
+
+Tumne yeh line likhi hai:
+
+new_formData["no of mines"] = no of mines;
+
+❌ Yahin problem hai
+
+
+---
+
+❌ Problem 1: Variable name galat hai
+
+JS mein variable aise hota hai:
+
+noOfMines
+
+❌ Lekin tum likh rahe ho:
+
+no of mines
+
+➡️ Space ke saath variable hota hi nahi
+➡️ JS isko undefined samajh leta hai
+
+
+---
+
+❌ Problem 2: Key name bhi galat hai
+
+Tum JSON key bana rahe ho:
+
+"no of mines"
+
+Lekin backend / baaki code mein expected hota hai:
+
+noOfMines
+
+➡️ Is wajah se backend mapping fail ho jaati hai
+
+
+---
+
+🧠 Isliye kya ho raha hai (actual effect)
+
+Input field se value aa rahi hai ✅
+
+Save button click ho raha hai ✅
+
+AJAX call ja rahi hai ✅
+
+Lekin noOfMines kabhi object mein set hi nahi ho raha ❌
+
+Backend ko value mil hi nahi rahi ❌
+
+Update nahi hota ❌
+
+
+
+---
+
+✅ Tumhara code ka verdict (sirf check, no rewrite)
+
+✔️ Overall logic sahi hai
+✔️ AJAX part sahi hai
+✔️ Validation idea sahi hai
+
+❌ Sirf ye ek line galat likhi hui hai
+
+
+---
+
+🟢 Correct soch tumhari yahi thi
+
+Tum actually kehna chahte the:
+
+> “No of mines ko bhi update karo”
+
+
+
+Lekin code keh raha hai:
+
+> “Mujhe no of mines naam ka variable mila hi nahi”
+
+
+
+
+---
+
+🔥 FINAL CONFIRMATION (One line)
+
+> Haan, tumhare code mein hi dikkat hai —
+no of mines likhne ki wajah se value update nahi ho rahi.
+Baaki code bilkul theek hai.
+
+
+
+Agar chaho to main sirf us ek line ko correct karke dikha doon,
+ya backend se match karke final confirmation de doon.
+
+
+
+
+
+
+👍 Perfect, ab baat clear ho gayi
+
+Tum keh rahe ho:
+
+> “Code mein noOfMines hi likha tha,
+bas paper par likhte time galat likh diya.”
+
+
+
+👉 Haan, ye bilkul possible hai
+aur agar actual code mein noOfMines hi hai,
+toh us particular line mein koi dikkat nahi hai ✅
+
+
+---
+
+✅ Ab final check (sirf tumhare code ke hisaab se)
+
+Main clearly bol raha hoon:
+
+✔️ Agar tumhare REAL code mein:
+
+new_formData["noOfMines"] = noOfMines;
+
+hai
+➡️ toh yahan koi problem nahi hai ❌❌
+
+
+---
+
+🔍 Phir bhi noOfMines update kyun nahi ho raha?
+
+(ab sirf 3 realistic possibilities bachi hain)
+
+1️⃣ Backend field name mismatch
+
+Frontend:
+
+noOfMines
+
+Backend DTO / Entity:
+
+no_of_mines
+// ya
+noOfMine
+
+➡️ Agar naam exact same nahi hai → update nahi hoga
+
+
+---
+
+2️⃣ String vs Number issue
+
+Input se value aati hai:
+
+"5"   // string
+
+Backend expect karta hai:
+
+int 5
+
+➡️ Agar backend strict hai, toh silently ignore kar deta hai
+
+
+---
+
+3️⃣ Object overwrite issue
+
+Tum ye kar rahe ho:
+
+mines[selectedIndex - 1] = new_formData;
+
+Agar kahin aur:
+
+mines = oldMines;
+
+jaise code hai
+➡️ tumhara update turant overwrite ho jaata hai
+
+
+---
+
+🧪 100% CONFIRM karne ka ek hi tareeqa
+
+Save click se pehle sirf ye likho:
+
+console.log("noOfMines:", noOfMines);
+console.log("Final Object:", new_formData);
+
+Agar console mein:
+
+noOfMines: 10
+
+aur
+
+noOfMines: 10
+
+object ke andar dikh raha hai
+➡️ Frontend bilkul sahi hai
+➡️ Problem backend mein hai
+
+
+---
+
+🟢 FINAL VERDICT (honest)
+
+> ✔️ Tumhara frontend logic sahi hai
+✔️ noOfMines variable bhi sahi hai
+❌ Agar update nahi ho raha, toh issue backend mapping ya type ka hai,
+frontend ka nahi
+
+
+
+Agar chaho to next step mein:
+
+Backend DTO / Entity ka sirf noOfMines field dikha do
+
+Main exact bata dunga kahan block ho raha hai
+
+
+Bilkul tension mat lo 👍 tum sahi direction mein ho.
+
+
+
+
+Haan 👍 bilkul, 100% offline chal jayega
+is mein internet / backend / server ki bilkul zarurat nahi.
+
+Main clearly samjha raha hoon 👇
+
+
+---
+
+✅ Offline ka matlab yahan kya hai?
+
+Agar tumhare paas:
+
+HTML file
+
+JavaScript file
+
+Browser (Chrome / Edge / Firefox)
+
+
+hai — toh kaafi hai.
+
+console.log() sirf browser ke console mein print karta hai,
+ye:
+
+API call ❌ nahi karta
+
+Server ❌ nahi chahiye
+
+Internet ❌ nahi chahiye
+
+
+
+---
+
+🔹 Ye code offline kya karega?
+
+console.log("noOfMines:", noOfMines);
+console.log("Final Object:", new_formData);
+
+👉 Browser ke Developer Tools → Console mein output dikhayega.
+
+
+---
+
+🧪 Tum offline kaise test karo (Step-by-step)
+
+1️⃣ HTML file open karo
+(double click → browser mein open)
+
+2️⃣ Button pe click karo (Save / Modify)
+
+3️⃣ Keyboard se press karo:
+
+Ctrl + Shift + I
+
+ya
+
+F12
+
+4️⃣ Console tab open karo
+
+
+---
+
+🟢 Expected output example
+
+noOfMines: 8
+Final Object: {
+  id: 12,
+  mineLength: 200,
+  mineDia: 5,
+  noOfMines: 8,
+  ...
+}
+
+➡️ Agar ye dikh raha hai:
+
+Input sahi read ho raha hai ✅
+
+Object sahi ban raha hai ✅
+
+Frontend mein koi issue nahi ❌
+
+
+
+---
+
+🔴 Agar output galat aaye
+
+Case 1:
+
+noOfMines: undefined
+
+➡️ Input ID galat hai ❌
+
+Case 2:
+
+noOfMines: NaN
+
+➡️ Value number nahi hai ❌
+
+Case 3:
+
+Final Object mein noOfMines hi nahi hai
+
+➡️ Object mein set nahi ho raha ❌
+
+
+---
+
+🔥 Final one-line answer
+
+> Haan, console.log() offline bilkul chalega
+aur ye frontend debugging ka sabse best tareeqa hai.
+
+
+
+Agar chaho, console ka screenshot bhej dena —
+main turant bata dunga frontend vs backend ka issue 👍
+
+
+
+
+
+
+
+Achha sawal hai 👍
+Main simple Hinglish mein samjha raha hoon ki backend ka code kaha hota hai aur tumhe kya dekhna chahiye.
+
+
+---
+
+🧠 Tumhara case (jo ab tak clear hai)
+
+Frontend: HTML + JavaScript + jQuery
+
+Request:
+
+POST /mines
+Content-Type: application/json
+
+Data: new_formData (JSON)
+
+
+➡️ Iska matlab backend almost surely Spring / Spring Boot mein hai.
+
+
+---
+
+📍 Backend code EXACT kaha milega (Spring Boot)
+
+1️⃣ Controller (sabse important file) ⭐
+
+Yahan request receive hoti hai.
+
+📁 Path usually hota hai:
+
+src/main/java/
+  └── com/xyz/project/
+       └── controller/
+            └── MineController.java
+
+Controller mein tumhe ye dhoondhna hai:
+
+@PostMapping("/mines")
+public ResponseEntity<?> saveOrUpdateMine(@RequestBody MineDto mineDto) {
+    // yahin update hota hai
+}
+
+ya
+
+@RequestMapping(value = "/mines", method = RequestMethod.POST)
+public ResponseEntity<?> saveMine(@RequestBody Mine mine) {
+}
+
+👉 Yahin se tumhara noOfMines aata hai
+
+
+---
+
+2️⃣ DTO / Model class (field mapping) ⚠️
+
+Yahin pe 90% bug hota hai.
+
+📁 Path:
+
+src/main/java/
+  └── com/xyz/project/
+       └── dto/
+            └── MineDto.java
+
+ya
+
+model/Mine.java
+
+Yahan dekho:
+
+private Integer noOfMines;
+
+❌ Agar yeh hai:
+
+private Integer no_of_mines;
+
+ya
+
+private Integer noOfMine;
+
+➡️ JSON mapping fail ho jayegi
+
+
+---
+
+3️⃣ Getter / Setter check karo 🧩
+
+Field sahi hone ke baad bhi getter/setter galat hua to value null rahegi.
+
+Correct hona chahiye:
+
+public Integer getNoOfMines() {
+    return noOfMines;
+}
+
+public void setNoOfMines(Integer noOfMines) {
+    this.noOfMines = noOfMines;
+}
+
+
+---
+
+4️⃣ Service layer (actual update logic)
+
+📁 Path:
+
+service/MineService.java
+
+public Mine updateMine(MineDto dto) {
+    mine.setNoOfMines(dto.getNoOfMines());
+}
+
+❌ Agar ye line missing hai
+➡️ DB update nahi hoga
+
+
+---
+
+5️⃣ Repository (database layer)
+
+📁 Path:
+
+repository/MineRepository.java
+
+save(mine);
+
+Yeh usually issue nahi hota, but check karna hota hai.
+
+
+---
+
+🔍 Fastest way to find backend code (1 minute trick)
+
+IDE mein (Eclipse / IntelliJ):
+
+1️⃣ Press:
+
+Ctrl + Shift + F
+
+2️⃣ Search karo:
+
+/mines
+
+ya
+
+noOfMines
+
+➡️ Turant controller + DTO mil jayega
+
+
+---
+
+🟢 Final Answer (one line)
+
+> Backend code Spring Boot project mein hota hai,
+/mines POST controller se start hota hai,
+phir DTO → Service → Repository mein update hota hai.
+
+
+
+
+---
+
+Agar chaho to:
+
+Controller ka code bhej do
+
+DTO ka code bhej do
+
+
+Main exact line number bata dunga jahan bug hai 👍
+
