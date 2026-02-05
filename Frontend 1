@@ -1,0 +1,104 @@
+// ===============================
+// MODIFY / SAVE MINE DETAILS
+// ===============================
+
+document.getElementById("modifyDetailsMine").addEventListener("click", function () {
+
+    console.log("🔥 SAVE BUTTON CLICKED");
+
+    // ===== INPUT VALUES =====
+    let mineLength = document.getElementById("modifyMineLength").value;
+    let mineDia = document.getElementById("modifyMineDia").value;
+    let noOfMines = document.getElementById("modifyNoOfMines").value;
+
+    console.log("Raw Inputs:", mineLength, mineDia, noOfMines);
+
+    // ===== AOP CHECK =====
+    if (!aopFlag) {
+        swal.fire("AOP is not defined !!!");
+        return;
+    }
+
+    // ===== EMPTY CHECK =====
+    if (mineLength === "" || mineDia === "" || noOfMines === "") {
+        swal.fire("Incomplete Details !!!");
+        return;
+    }
+
+    // ===== TYPE CONVERSION =====
+    mineLength = parseFloat(mineLength);
+    mineDia = parseFloat(mineDia);
+    noOfMines = parseInt(noOfMines);
+
+    // ===== VALIDATION =====
+    if (isNaN(mineLength) || mineLength <= 0) {
+        swal.fire("Mine Length value is incorrect !!!");
+        return;
+    }
+
+    if (isNaN(mineDia) || mineDia <= 0) {
+        swal.fire("Mine Diameter value is incorrect !!!");
+        return;
+    }
+
+    if (isNaN(noOfMines) || noOfMines <= 0) {
+        swal.fire("Number of Mines value is incorrect !!!");
+        return;
+    }
+
+    // ===== SELECTED MINE =====
+    let selectMine = document.getElementById("selectMine");
+    let selectedIndex = selectMine.selectedIndex;
+
+    if (selectedIndex <= 0) {
+        swal.fire("Please select a mine");
+        return;
+    }
+
+    let oldMine = mines[selectedIndex - 1];
+    let mineId = parseInt(oldMine.id);
+
+    // ===== CREATE FINAL OBJECT =====
+    let new_formData = {
+        id: mineId,
+        mineName: oldMine.mineName,
+        mineLength: mineLength,
+        mineDia: mineDia,
+        noOfMines: noOfMines,
+        latFrom: oldMine.latFrom,
+        latTo: oldMine.latTo,
+        longFrom: oldMine.longFrom,
+        longTo: oldMine.longTo,
+        scenarioId: scenarioId,
+        mineId: oldMine.mineId,
+        minePoints: oldMine.minePoints
+    };
+
+    console.log("✅ FINAL OBJECT:", new_formData);
+
+    // ===== UPDATE LOCAL ARRAY =====
+    mines[selectedIndex - 1] = new_formData;
+
+    // ===== AJAX CALL =====
+    $.ajax({
+        url: "mines",
+        type: "POST",
+        data: JSON.stringify(new_formData),
+        contentType: "application/json",
+        dataType: "json",
+
+        beforeSend: function () {
+            console.log("🚀 AJAX CALL SENT");
+        },
+
+        success: function (response) {
+            console.log("✅ BACKEND RESPONSE:", response);
+            swal.fire("Mine details updated successfully");
+        },
+
+        error: function (xhr, status, error) {
+            console.error("❌ AJAX ERROR:", status, error);
+            swal.fire("Error while updating mine details");
+        }
+    });
+});
