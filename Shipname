@@ -1,0 +1,86 @@
+Bhai 👍 ye JavaScript code browser ke Console me run karna hai.
+Main step-by-step bata raha hoon 👇
+
+
+---
+
+✅ ✅ METHOD 1: Chrome / Edge / Brave me (sabse easy)
+
+🔹 STEP 1
+
+Website open karo jahan dropdown hai.
+
+🔹 STEP 2
+
+Keyboard dabao:
+
+👉 F12
+YA
+👉 Right Click → Inspect
+
+
+---
+
+🔹 STEP 3
+
+Upar tabs dikhenge:
+
+Elements | Console | Network | …
+
+👉 Console par click karo
+
+
+---
+
+🔹 STEP 4
+
+Ye code paste karo 👇
+
+var select = document.getElementById("ShipName");
+
+for (var i = select.options.length - 1; i >= 0; i--) {
+    if (select.options[i].text.toLowerCase() === "aactiontest") {
+        select.remove(i);
+    }
+}
+
+
+---
+
+🔹 STEP 5
+
+Enter dabao ✅
+
+👉 dropdown se aactiontest hat jayega
+
+
+---
+
+✅ METHOD 2: Agar mobile par ho
+
+Mobile Chrome me console nahi hota easily.
+
+👉 Laptop/PC par karo
+👉 ya mujhe bolo permanent solution chahiye
+
+
+---
+
+❗ IMPORTANT
+
+✔ ye temporary remove hai
+✔ page refresh → wapas aa jayega
+
+
+---
+
+🔥 Agar permanently hatana hai
+
+Mujhe bolo: permanent remove chahiye
+Main JSP/backend solution dunga.
+
+
+---
+
+Bhai ab clear? 😎
+Karke batao hat gaya ya nahi.
