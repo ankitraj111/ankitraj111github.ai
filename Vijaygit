@@ -1,0 +1,108 @@
+Samajh gaya bhai 🙂
+Tum pooch rahe ho offline (internet ke bina) Git ko Eclipse mein kaise use kare.
+
+Offline ka matlab 👉 sirf local computer par version control use karna.
+
+Follow karo 👇
+
+
+---
+
+✅ 1️⃣ Eclipse mein local Git repository banana
+
+1. Eclipse open karo
+
+
+2. Project par Right Click
+
+
+3. Team → Share Project
+
+
+4. Select Git
+
+
+5. Click Create Repository
+
+
+6. Finish
+
+
+
+👉 Ab project Git control mein aa gaya (offline).
+
+
+---
+
+✅ 2️⃣ Changes save & commit karna (offline)
+
+1. File edit karo
+
+
+2. Right click project → Team → Commit
+
+
+3. Message likho
+
+
+4. Click Commit
+
+
+
+👉 Ye commit sirf local system mein save hota hai.
+
+
+---
+
+✅ 3️⃣ Project history dekhna
+
+Right click project →
+Team → Show in History
+
+👉 Tum purane versions dekh sakte ho.
+
+
+---
+
+✅ 4️⃣ Previous version wapas lana
+
+1. History open karo
+
+
+2. Kisi old commit par right click
+
+
+3. Reset → Hard / Mixed
+
+
+
+👉 Purana version restore ho jayega.
+
+
+---
+
+🔥 Offline Git ka use kyu useful hai?
+
+✔ Code backup rehta hai
+✔ Galti ho jaaye to revert kar sakte ho
+✔ Version history milti hai
+✔ Internet ki zarurat nahi
+
+
+---
+
+⚠️ Online kab chahiye?
+
+Sirf tab jab: ✅ GitHub par upload karna ho
+✅ Team ke saath share karna ho
+
+
+---
+
+Agar tum chaho toh main:
+
+✅ simple diagram ke saath samjha du
+✅ Git vs GitHub difference clear kar du
+✅ Eclipse mein push error solve kara du
+
+Batao 👍
